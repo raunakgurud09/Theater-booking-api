@@ -1,0 +1,53 @@
+{
+  "name": "typescript-eslint-starter",
+  "version": "1.0.0",
+  "description": "This is file which was implemented a base for eslint,prettier,nodemon.json and husky  ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon --config nodemon.js src/index.ts",
+    "lint": "eslint . --ext .ts",
+    "lint-and-fix": "eslint . --ext .ts --fix",
+    "prettier-format": "npx prettier --config .prettierrc \"src/**/*.ts\" --write",
+    "build": "rimraf ./build && tsc",
+    "start-prod": "npm run build && node build/index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier-format && npm run lint"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "dayjs": "^1.11.6",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.7.1",
+    "nanoid": "^4.0.0",
+    "pino": "^8.7.0",
+    "pino-pretty": "^9.1.1",
+    "prettier": "^2.7.1",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.11.7",
+    "@types/yup": "^0.32.0",
+    "@types/lodash": "^4.14.188",
+    "@types/mongoose": "^5.11.97",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.1",
+    "nodemon": "^2.0.20",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  }
+}
