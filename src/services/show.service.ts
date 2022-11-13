@@ -1,4 +1,4 @@
-import { DocumentDefinition } from 'mongoose';
+import { DocumentDefinition, FilterQuery } from 'mongoose';
 import { Show, ShowDocument } from '../model/show.model';
 
 export async function allShows() {
@@ -18,9 +18,9 @@ export async function createShow(input: DocumentDefinition<ShowDocument>) {
   }
 }
 
-export async function showDetails(screen: string) {
+export async function showDetails(query: FilterQuery<ShowDocument>) {
   try {
-    return await Show.find({ screenNumber: screen }).populate('seats');
+    return await Show.find(query).populate('seats');
   } catch (error) {
     console.log(error);
   }

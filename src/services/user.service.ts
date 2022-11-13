@@ -43,7 +43,7 @@ export async function validatePassword({
 export async function createTicket(
   screen: string,
   showId: string,
-  seat: string,
+  seat: any,
   user: any
 ) {
   try {
@@ -59,11 +59,10 @@ export async function createTicket(
       _id: showId
     }).populate('seats');
 
-    if(!show){
-      const message = {"message":"No such show exist"}
-      return message
+    if (!show) {
+      const message = { message: 'No such show exist' };
+      return message;
     }
-
 
     let isAvailable = true;
     show.seats.map((seat: TicketDocument) => {
@@ -100,7 +99,7 @@ export async function createTicket(
 export async function cancelTicket(
   screen: string,
   showId: string,
-  seat: string,
+  seat: any,
   user: any
 ) {
   try {
@@ -111,8 +110,8 @@ export async function cancelTicket(
       _id: showId
     }).populate('seats');
 
-    if(!show){
-      return {"message":"No such show exist"}
+    if (!show) {
+      return { message: 'No such show exist' };
     }
 
     show.seats.map(async (seat: TicketDocument) => {

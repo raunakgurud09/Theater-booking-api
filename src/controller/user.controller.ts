@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { omit } from 'lodash';
-import { UserDocument } from '../model/user.model';
+import { omit, get } from 'lodash';
+
 import {
   cancelTicket,
   createTicket,
@@ -20,30 +20,29 @@ export async function createUserHandle(req: Request, res: Response) {
   // res.status(200).send('ok')
 }
 
-export async function getAuthorizedUser(req: any, res: Response) {
-  const user: UserDocument = req.user;
+export async function getAuthorizedUser(req: Request, res: Response) {
+  const user = get(req,"user")
   res.status(200).send(user);
 }
 
-export async function bookTicketHandler(req: any, res: Response) {
+export async function bookTicketHandler(req: Request, res: Response) {
   try {
-    // console.log(req.params,req.query)
-    const { screen, showId } = req.params;
-    const { seat } = req.query;
-    const user = req.user;
+    const {screen,showId} = get(req,"params")
+    const {seat} = get(req,"query")
+    const user = get(req, 'user');
     const ticket = await createTicket(screen, showId, seat, user);
-    console.log(ticket,"ticket");
+    console.log(ticket, 'ticket');
     return res.send(ticket);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function cancelTicketHandler(req: Request | any, res: Response) {
+export async function cancelTicketHandler(req: Request , res: Response) {
   try {
-    const { screen, showId } = req.params;
-    const { seat } = req.query;
-    const user = req.user;
+    const {screen,showId} = get(req,"params")
+    const {seat} = get(req,"query")
+    const user = get(req, 'user');
     const ticket = await cancelTicket(screen, showId, seat, user);
     return res.send({ ticket, message: 'Ticket canceled' });
   } catch (error) {
@@ -51,9 +50,9 @@ export async function cancelTicketHandler(req: Request | any, res: Response) {
   }
 }
 
-export async function getTicketHandler(req: any, res: Response) {
+export async function getTicketHandler(req: Request, res: Response) {
   try {
-    const user = req.user;
+    const user = get(req, 'user');
     const ticket = await getTicket(user);
     return res.send(ticket);
   } catch (error) {
