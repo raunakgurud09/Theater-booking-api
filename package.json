@@ -1,8 +1,8 @@
 {
-  "name": "typescript-eslint-starter",
+  "name": "Theater Booking Api",
   "version": "1.0.0",
-  "description": "This is file which was implemented a base for eslint,prettier,nodemon.json and husky  ",
-  "main": "index.js",
+  "description": "This is an api which allows user to book-tickets in a Theater using express-typescript and mongodb",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devStart": "nodemon --config nodemon.js src/index.ts",
@@ -17,7 +17,7 @@
       "pre-commit": "npm run prettier-format && npm run lint"
     }
   },
-  "keywords": [],
+  "keywords": ["booking-api","mongoDB","typescript","Theater-booking","express"],
   "author": "",
   "license": "ISC",
   "dependencies": {
