@@ -1,4 +1,4 @@
-import { DocumentDefinition, FilterQuery } from 'mongoose';
+import { DocumentDefinition, FilterQuery, UpdateQuery } from 'mongoose';
 import { Show, ShowDocument } from '../model/show.model';
 
 export async function allShows() {
@@ -13,6 +13,26 @@ export async function createShow(input: DocumentDefinition<ShowDocument>) {
   try {
     //check weather their exit a show already
     return await Show.create(input);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function updateShow(
+  query: FilterQuery<ShowDocument>,
+  update: UpdateQuery<ShowDocument>
+) {
+  try {
+    return await Show.updateOne({ query }, { update });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+export async function deleteShow(query: FilterQuery<ShowDocument>) {
+  try {
+    return await Show.deleteOne(query);
   } catch (error) {
     console.log(error);
   }

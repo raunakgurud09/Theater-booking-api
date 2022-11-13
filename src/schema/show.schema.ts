@@ -1,12 +1,33 @@
 import { object, string, number, date } from 'yup';
 
-export const createShowSchema = object({
+const payload = {
   body: object({
     screenNumber: number().required('Screen number is required'),
     movieName: string().required('movie name is required'),
     duration: date().required('date is required')
   })
+};
+
+const params = {
+  params: object({
+    showId: string().required('showId is required')
+  })
+};
+
+export const createShowSchema = object({
+  ...payload
 });
+
+export const updateShowSchema = object({
+  ...payload,
+  ...params
+});
+
+export const deleteShowSchema = object({
+  ...payload,
+  ...params
+});
+
 
 export const bookTicketSchema = object({
   body: object({}),
