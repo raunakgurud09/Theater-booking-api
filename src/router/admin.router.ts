@@ -1,9 +1,13 @@
 import express from 'express';
-import { createShowHandler, seeAllShows } from '../controller/show.controller';
+import {
+  createShowHandler,
+  seeAllShows,
+  seeShowDetailsHandler
+} from '../controller/show.controller';
 import authorizePermissions from '../middleware/auth.middleware';
 import requiresUser from '../middleware/requiresUser.middleware';
 import validateRequest from '../middleware/validate.middleware';
-import { createShowSchema } from '../schema/show.schema';
+import { createShowSchema, showDetailsSchema } from '../schema/show.schema';
 const Router = express.Router();
 
 Router.get('/ping-check', (req, res) => {
@@ -11,11 +15,16 @@ Router.get('/ping-check', (req, res) => {
 });
 
 //Get all shows
-Router.get("/shows",requiresUser,authorizePermissions("admin"),seeAllShows)
+Router.get('/shows', requiresUser, authorizePermissions('admin'), seeAllShows);
 
 //get shows with according to screen number
-Router.get('/show/:screen')
-
+Router.get(
+  '/show/:screen',
+  validateRequest(showDetailsSchema),
+  requiresUser,
+  authorizePermissions('admin'),
+  seeShowDetailsHandler
+);
 
 //create a show
 Router.post(
@@ -24,16 +33,15 @@ Router.post(
   requiresUser,
   authorizePermissions('admin'),
   createShowHandler
-); 
+);
 
 //update a show details
-Router.patch('/show/:showId')
+Router.patch('/show/:showId');
 
 //delete a show
-Router.delete('/show/:showId')
+Router.delete('/show/:showId');
 
-//get info of a show 
-Router.get('/show/:showId')
-
+//get info of a show
+Router.get('/show/:showId');
 
 export default Router;

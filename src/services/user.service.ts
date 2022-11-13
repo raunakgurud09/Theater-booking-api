@@ -40,7 +40,12 @@ export async function validatePassword({
   return omit(user.toJSON(), 'password');
 }
 
-export async function createTicket(screen: string, seat: string, user: any) {
+export async function createTicket(
+  screen: string,
+  showId: string,
+  seat: string,
+  user: any
+) {
   try {
     const s = parseInt(seat);
 
@@ -49,9 +54,16 @@ export async function createTicket(screen: string, seat: string, user: any) {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const show: any = await Show.findOne({ screenNumber: screen }).populate(
-      'seats'
-    );
+    const show: any = await Show.findOne({
+      screenNumber: screen,
+      _id: showId
+    }).populate('seats');
+
+    if(!show){
+      const message = {"message":"No such show exist"}
+      return message
+    }
+
 
     let isAvailable = true;
     show.seats.map((seat: TicketDocument) => {
@@ -85,14 +97,25 @@ export async function createTicket(screen: string, seat: string, user: any) {
   }
 }
 
-export async function cancelTicket(screen: string, seat: string, user: any) {
+export async function cancelTicket(
+  screen: string,
+  showId: string,
+  seat: string,
+  user: any
+) {
   try {
     const s = parseInt(seat);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { seats }:any = await Show.findOne({ screenNumber: screen }).populate(
-      'seats'
-    );
-    seats.map(async (seat: TicketDocument) => {
+    const show = await Show.findOne({
+      screenNumber: screen,
+      _id: showId
+    }).populate('seats');
+
+    if(!show){
+      return {"message":"No such show exist"}
+    }
+
+    show.seats.map(async (seat: TicketDocument) => {
       if (seat.seatNumber == s && seat.userId === user._id) {
         try {
           //cancel the ticket
@@ -103,6 +126,14 @@ export async function cancelTicket(screen: string, seat: string, user: any) {
       }
       return;
     });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getTicket(user: any) {
+  try {
+    return await Ticket.find({ userId: user._id });
   } catch (error) {
     console.log(error);
   }

@@ -3,7 +3,7 @@ const Router = express.Router()
 
 import { Request,Response } from "express";
 
-import { bookTicketHandler, cancelTicketHandler, createUserHandle, getAuthorizedUser } from "../controller/user.controller";
+import { bookTicketHandler, cancelTicketHandler, createUserHandle, getAuthorizedUser, getTicketHandler } from "../controller/user.controller";
 import { createUserSchema, createUserSessionSchema } from "../schema/user.schema";
 import validateRequest from "../middleware/validate.middleware";
 import { createUserSessionHandler, getUserSessionsHandler } from "../controller/session.controller";
@@ -37,14 +37,13 @@ Router.get('/shows')
 Router.route('/show/:screen').get()
 
 //book ticket for a show
-Router.post("/show/:screen/book?",validateRequest(bookTicketSchema),requiresUser,bookTicketHandler)
-// Router.post("/show/:screen/book?",(req,res)=>{res.send('hi')})
+Router.post("/:screen/show/:showId/book?",validateRequest(bookTicketSchema),requiresUser,bookTicketHandler)
 
 //cancel ticket for a show
-Router.delete("/show/:screen/book?",validateRequest(bookTicketSchema),requiresUser,cancelTicketHandler)
+Router.delete("/:screen/show/:showId/cancel?",validateRequest(bookTicketSchema),requiresUser,cancelTicketHandler)
 
 
 //get ticket
-Router.get('get-ticket')
+Router.get('/get-ticket',requiresUser,getTicketHandler)
 
 export default Router

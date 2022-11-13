@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { allShows, createShow } from "../services/show.service";
+import { allShows, createShow, showDetails } from "../services/show.service";
 
 export async function createShowHandler(req:Request,res:Response) {
     try {
@@ -13,6 +13,16 @@ export async function createShowHandler(req:Request,res:Response) {
 export async function seeAllShows(req:Request,res:Response) {
     try {
         const show = await allShows()
+        return res.send(show)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function seeShowDetailsHandler(req:any,res:Response) {
+    try {
+        const {screen } = req.params
+        const show = await showDetails(screen)
         return res.send(show)
     } catch (error) {
         console.log(error)

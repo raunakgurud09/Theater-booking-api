@@ -11,9 +11,16 @@ export const createShowSchema = object({
 export const bookTicketSchema = object({
   body: object({}),
   params: object({
-    screen: string().required('screen number is required')
+    screen: string().required('screen number is required'),
+    showId:string().required('show id is required')
   }),
   query: object({
     seat: string().required('seat number is required')
+  })
+});
+
+export const showDetailsSchema = object({
+  params: object({
+    screen: string().required('screen number is required')
   })
 });
