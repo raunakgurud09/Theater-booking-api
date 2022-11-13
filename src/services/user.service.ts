@@ -40,11 +40,7 @@ export async function validatePassword({
   return omit(user.toJSON(), 'password');
 }
 
-export async function createTicket(
-  screen: string,
-  seat: any,
-  user: any
-) {
+export async function createTicket(screen: string, seat: string, user: any) {
   try {
     const s = parseInt(seat);
 
@@ -58,7 +54,7 @@ export async function createTicket(
     );
 
     let isAvailable = true;
-    show.seats.map((seat:any) => {
+    show.seats.map((seat: TicketDocument) => {
       if (seat.seatNumber == s && seat.isSeatFilled === true) {
         isAvailable = false;
         return false;
@@ -89,38 +85,25 @@ export async function createTicket(
   }
 }
 
-// if(s>100){
-//   return res.status(StatusCodes.BAD_REQUEST).json({"message":"Their are only 100 seats"})
-// }
-
-// const show = await Show.findOne({ screenNumber: screenNumber }).populate('seats')
-
-// //check the database
-// let isAvailable = true
-// show.seats.map(seat => {
-//   if(seat.seatNumber == s && seat.isSeatFilled === true){
-//     // console.log('inside',seat.seatNumber,s)
-//     isAvailable = false
-//     return false
-//   }
-//   // console.log('outside',seat.seatNumber,s,seat.isSeatFilled)
-//   return true
-// })
-
-// if (isAvailable) {
-//   try {
-//     const newTicket = await Ticket.create({
-//       seatNumber: s,
-//       userId: req.user._id,
-//       isSeatFilled: true,
-//     })
-//     show.seats.push(newTicket)
-//     await show.save()
-//     return res.status(200).json(newTicket);
-//   } catch (error) {
-//     console.log(Error)
-//   }
-// }else{
-//   //return available tickets preferable side one
-//   res.send("book ticket");
-// }
+export async function cancelTicket(screen: string, seat: string, user: any) {
+  try {
+    const s = parseInt(seat);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { seats }:any = await Show.findOne({ screenNumber: screen }).populate(
+      'seats'
+    );
+    seats.map(async (seat: TicketDocument) => {
+      if (seat.seatNumber == s && seat.userId === user._id) {
+        try {
+          //cancel the ticket
+          return await Ticket.findOneAndDelete({ seatNumber: s });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      return;
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}

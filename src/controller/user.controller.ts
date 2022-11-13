@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
-import { lte, omit } from 'lodash';
+import { omit } from 'lodash';
 import { UserDocument } from '../model/user.model';
-import { createTicket, createUser } from '../services/user.service';
+import {
+  cancelTicket,
+  createTicket,
+  createUser
+} from '../services/user.service';
 
 export async function createUserHandle(req: Request, res: Response) {
   try {
@@ -29,6 +33,18 @@ export async function bookTicketHandler(req: any, res: Response) {
     const ticket = await createTicket(screen, seat, user);
 
     return res.send(ticket);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function cancelTicketHandler(req: Request | any, res: Response) {
+  try {
+    const { screen } = req.params;
+    const { seat } = req.query;
+    const user = req.user;
+    const ticket = await cancelTicket(screen, seat, user);
+    return res.send({ ticket, message: 'Ticket canceled' });
   } catch (error) {
     console.log(error);
   }
