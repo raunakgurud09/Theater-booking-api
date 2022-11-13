@@ -17,8 +17,10 @@ app.use(express.urlencoded({extended:false}))
 
 // Routes
 import userRouter  from "./router/user.router"
+import adminRouter from "./router/admin.router"
 
 app.use('/api/v1',userRouter)
+app.use('/api/v1/admin',adminRouter)
 
 const PORT = 3000;
 

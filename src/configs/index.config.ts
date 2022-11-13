@@ -4,7 +4,7 @@ export default {
   dbUri: 'mongodb://localhost:27017/typescript-rest-api',
   dbUriCloud: `mongodb+srv://raunak09:raunak09@cluster0.fl4iz.mongodb.net/typescript-express?retryWrites=true&w=majority`,
   saltWorkFactor: 10,
-  accessTokenTtl: '15m',
+  accessTokenTtl: '50m',
   refreshTokenTtl: '1y',
   privateKey: `-----BEGIN RSA PRIVATE KEY-----
   MIICWwIBAAKBgQCQNBc4IP2ewViqE+ZHbnqGoCZFyAUtrxKmO4k/boSvBisJH6BX
