@@ -3,6 +3,7 @@ import {
   createShowHandler,
   deleteShowHandler,
   seeAllShows,
+  seeScreenDetailsHandler,
   seeShowDetailsHandler,
   updateShowHandler
 } from '../controller/show.controller';
@@ -17,9 +18,6 @@ import {
 } from '../schema/show.schema';
 const Router = express.Router();
 
-Router.get('/ping-check', (req, res) => {
-  res.send('working');
-});
 
 //Get all shows
 Router.get('/shows', requiresUser, authorizePermissions('admin'), seeAllShows);
@@ -30,7 +28,7 @@ Router.get(
   validateRequest(showDetailsSchema),
   requiresUser,
   authorizePermissions('admin'),
-  seeShowDetailsHandler
+  seeScreenDetailsHandler
 );
 
 //create a show

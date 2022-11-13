@@ -7,6 +7,7 @@ import {
   updateShow
 } from '../services/show.service';
 import { get } from 'lodash';
+import { Show } from '../model/show.model';
 
 export async function createShowHandler(req: Request, res: Response) {
   try {
@@ -37,7 +38,6 @@ export async function deleteShowHandler(req: Request, res: Response) {
   }
 }
 
-
 export async function seeAllShows(req: Request, res: Response) {
   try {
     const show = await allShows();
@@ -50,9 +50,20 @@ export async function seeAllShows(req: Request, res: Response) {
 export async function seeShowDetailsHandler(req: Request, res: Response) {
   try {
     const { screen, showId } = get(req, 'params');
-    const show = await showDetails({ screen, showId });
+    const show = await showDetails({  showId });
     return res.send(show);
   } catch (error) {
     console.log(error);
   }
 }
+
+export async function seeScreenDetailsHandler(req: Request, res: Response) {
+  try {
+    const { screen } = get(req, 'params');
+    const show = await Show.find({ screenNumber: screen });
+    return res.send(show);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
