@@ -2,7 +2,7 @@ import {AnySchema} from "yup"
 import { NextFunction, Request, Response } from "express";
 
 
-const validate = (schema:AnySchema) => async (
+const validateRequest = (schema:AnySchema) => async (
     req:Request,
     res:Response,
     next:NextFunction
@@ -20,4 +20,4 @@ const validate = (schema:AnySchema) => async (
     }
 }
 
-export default validate
+export default validateRequest

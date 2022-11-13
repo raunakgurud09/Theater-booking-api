@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { omit } from 'lodash';
+import { UserDocument } from '../model/user.model';
 import { createUser } from '../services/user.service';
 
 
@@ -13,4 +14,9 @@ export async function createUserHandle(req: Request, res: Response) {
     return res.status(409).send(e);
   }
   // res.status(200).send('ok')
+}
+
+export async function getAuthorizedUser(req:any,res:Response){
+  const user:UserDocument = req.user
+  res.status(200).send(user)
 }
