@@ -4,8 +4,8 @@ dotenv.config()
 export default {
   port: 3000,
   host: 'localhost',
-  dbUri: 'mongodb://localhost:27017/typescript-rest-api',
-  dbUriCloud: 'mongodb+srv://raunak09:raunak09@cluster0.fl4iz.mongodb.net/typescript-express?retryWrites=true&w=majority',
+  // dbUri: 'mongodb://localhost:27017/typescript-rest-api',
+  dbUriCloud: '',
   saltWorkFactor: 10,
   accessTokenTtl: '50m',
   refreshTokenTtl: '1y',
