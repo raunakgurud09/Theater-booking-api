@@ -49,8 +49,8 @@ export async function seeAllShows(req: Request, res: Response) {
 
 export async function seeShowDetailsHandler(req: Request, res: Response) {
   try {
-    const { screen, showId } = get(req, 'params');
-    const show = await showDetails({  showId });
+    const { showId } = get(req, 'params');
+    const show = await showDetails(  showId );
     return res.send(show);
   } catch (error) {
     console.log(error);

@@ -25,6 +25,7 @@ import authorizePermissions from '../middleware/auth.middleware';
 import { bookTicketSchema, showDetailsSchema } from '../schema/show.schema';
 import {
   seeAllShows,
+  seeScreenDetailsHandler,
   seeShowDetailsHandler
 } from '../controller/show.controller';
 
@@ -53,7 +54,7 @@ Router.delete('/sessions', requiresUser, invalidateUserSessionHandler);
 Router.get(
   '/authorized',
   requiresUser,
-  authorizePermissions('admin'),
+  authorizePermissions('user'),
   getAuthorizedUser
 );
 
@@ -64,11 +65,12 @@ Router.get('/shows', seeAllShows);
 Router.get(
   '/:screen/shows',
   validateRequest(showDetailsSchema),
-  seeShowDetailsHandler
+  seeScreenDetailsHandler
 );
+
+//get show details
 Router.get(
-  '/:screen/show/:showId',
-  validateRequest(showDetailsSchema),
+  '/show/:showId',
   seeShowDetailsHandler
 );
 

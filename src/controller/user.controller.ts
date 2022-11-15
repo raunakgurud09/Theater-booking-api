@@ -21,30 +21,29 @@ export async function createUserHandle(req: Request, res: Response) {
 }
 
 export async function getAuthorizedUser(req: Request, res: Response) {
-  const user = get(req,"user")
+  const user = get(req, 'user');
   res.status(200).send(user);
 }
 
 export async function bookTicketHandler(req: Request, res: Response) {
   try {
-    const {screen,showId} = get(req,"params")
-    const {seat} = get(req,"query")
+    const { screen, showId } = get(req, 'params');
+    const { seat } = get(req, 'query');
     const user = get(req, 'user');
     const ticket = await createTicket(screen, showId, seat, user);
-    console.log(ticket, 'ticket');
     return res.send(ticket);
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function cancelTicketHandler(req: Request , res: Response) {
+export async function cancelTicketHandler(req: Request, res: Response) {
   try {
-    const {screen,showId} = get(req,"params")
-    const {seat} = get(req,"query")
+    const { screen, showId } = get(req, 'params');
+    const { seat } = get(req, 'query');
     const user = get(req, 'user');
     const ticket = await cancelTicket(screen, showId, seat, user);
-    return res.send({ ticket, message: 'Ticket canceled' });
+    return res.send(ticket);
   } catch (error) {
     console.log(error);
   }
@@ -54,7 +53,7 @@ export async function getTicketHandler(req: Request, res: Response) {
   try {
     const user = get(req, 'user');
     const ticket = await getTicket(user);
-    return res.send(ticket);
+    return res.send({ user, ticket });
   } catch (error) {
     console.log(error);
   }

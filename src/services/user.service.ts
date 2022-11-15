@@ -55,7 +55,6 @@ export async function createTicket(
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const show: any = await Show.findOne({
-      screenNumber: screen,
       _id: showId
     }).populate('seats');
 
@@ -106,7 +105,6 @@ export async function cancelTicket(
     const s = parseInt(seat);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const show = await Show.findOne({
-      screenNumber: screen,
       _id: showId
     }).populate('seats');
 
@@ -123,7 +121,7 @@ export async function cancelTicket(
           console.log(error);
         }
       }
-      return;
+      return false
     });
   } catch (error) {
     console.log(error);

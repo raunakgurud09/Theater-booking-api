@@ -18,13 +18,9 @@ import {
 } from '../schema/show.schema';
 const Router = express.Router();
 
-
-//Get all shows
-Router.get('/shows', requiresUser, authorizePermissions('admin'), seeAllShows);
-
 //get shows with according to screen number
 Router.get(
-  '/:screen/show',
+  '/:screen/shows',
   validateRequest(showDetailsSchema),
   requiresUser,
   authorizePermissions('admin'),
@@ -41,6 +37,7 @@ Router.post(
 );
 
 //update a show details
+//not working
 Router.patch(
   '/show/:showId',
   validateRequest(updateShowSchema),

@@ -38,9 +38,9 @@ export async function deleteShow(query: FilterQuery<ShowDocument>) {
   }
 }
 
-export async function showDetails(query: FilterQuery<ShowDocument>) {
+export async function showDetails(showId:any) {
   try {
-    return await Show.find(query).populate('seats');
+    return await Show.findOne({_id:showId}).populate('seats');
   } catch (error) {
     console.log(error);
   }
